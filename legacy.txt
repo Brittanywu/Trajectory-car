@@ -1,0 +1,101 @@
+// --------------------------- Part A: This part is originally in the main loop
+
+if (SM == HIGH && SR == HIGH && SRR == HIGH && SL == HIGH && SLL == HIGH) {
+  forward();
+}
+if (SM == LOW && SR == LOW && SRR == LOW && SL == LOW && SLL == LOW) {
+  brake();
+  delay(2000);
+  count++;
+  // lcd.setCursor(0,0);
+  // lcd.print("run");
+  // lcd.setCursor(0,1);
+  // lcd.print("point: ");
+  // lcd.print(count);
+  forward();
+}
+if (SM == LOW && SR == HIGH && SRR == HIGH && SL == HIGH && SLL == HIGH) {
+  forward();
+}
+if (SM == HIGH && SR == LOW && SRR == LOW && SL == HIGH && SLL == HIGH) {
+  left();
+}
+if (SM == HIGH && SR == HIGH && SRR == HIGH && SL == LOW && SLL == LOW) {
+  right();
+}
+if (SM == HIGH && SR == LOW && SRR == HIGH && SL == HIGH && SLL == HIGH) {
+
+  left();
+}
+if (SM == HIGH && SR == HIGH && SRR == HIGH && SL == LOW && SLL == HIGH) {
+  right();
+}
+if (SM == HIGH && SR == HIGH && SRR == LOW && SL == HIGH && SLL == HIGH) {
+  left();
+}
+if (SM == HIGH && SR == HIGH && SRR == HIGH && SL == HIGH && SLL == LOW) {
+  right();
+}
+if (SM == LOW && SR == LOW && SRR == HIGH && SL == HIGH && SLL == HIGH) {
+  left();
+}
+if (SM == LOW && SR == HIGH && SRR == HIGH && SL == LOW && SLL == HIGH) {
+  right();
+}
+if (SM == LOW && SR == LOW && SRR == LOW && SL == HIGH && SLL == HIGH) {
+  left();
+}
+if (SM == LOW && SR == HIGH && SRR == HIGH && SL == LOW && SLL == LOW) {
+  right();
+}
+
+// --------------------------- End of part A
+
+// --------------------------- Part B: This part is originally for simple non-linear motor control
+
+void left()
+{
+  digitalWrite(PINOUT_MOTOR_L_DIR, HIGH); // 左电机后退
+  digitalWrite(PINOUT_MOTOR_R_DIR, LOW);  // 右电机前进
+
+  analogWrite(PINOUT_MOTOR_L_SPD, 0);   // PWM比例0~255调速，左右轮差异略增减
+  analogWrite(PINOUT_MOTOR_R_SPD, 105); // PWM比例0~255调速，左右轮差异略增减
+}
+
+void right()
+{
+  digitalWrite(PINOUT_MOTOR_R_DIR, LOW); // 右电机不转
+  analogWrite(PINOUT_MOTOR_R_SPD, 0);    // PWM比例0~255调速，左右轮差异略增减
+
+  digitalWrite(PINOUT_MOTOR_L_DIR, LOW); // 左电机前进
+  analogWrite(PINOUT_MOTOR_L_SPD, 105);  // PWM比例0~255调速，左右轮差异略增减
+}
+
+void spin_left() //左转(左轮后退，右轮前进)
+{
+  digitalWrite(PINOUT_MOTOR_L_DIR, HIGH); // 左电机后退
+  digitalWrite(PINOUT_MOTOR_R_DIR, LOW);  // 右电机前进
+
+  analogWrite(PINOUT_MOTOR_L_SPD, 25); // PWM比例0~255调速，左右轮差异略增减
+  analogWrite(PINOUT_MOTOR_R_SPD, 85); // PWM比例0~255调速，左右轮差异略增减
+}
+
+void spin_right()
+{
+  digitalWrite(PINOUT_MOTOR_L_DIR, LOW);  // 左电机前进
+  digitalWrite(PINOUT_MOTOR_R_DIR, HIGH); // 右电机后退
+
+  analogWrite(PINOUT_MOTOR_L_SPD, 25); // PWM比例0~255调速，左右轮差异略增减
+  analogWrite(PINOUT_MOTOR_R_SPD, 85); // PWM比例0~255调速，左右轮差异略增减
+}
+
+void back()
+{
+  digitalWrite(PINOUT_MOTOR_R_DIR, HIGH); // 右电机后退
+  analogWrite(PINOUT_MOTOR_R_SPD, 85);    // PWM比例0~255调速，左右轮差异略增减
+
+  digitalWrite(PINOUT_MOTOR_L_DIR, HIGH); // 左电机后退
+  analogWrite(PINOUT_MOTOR_L_SPD, 85);    // PWM比例0~255调速，左右轮差异略增减
+}
+
+// --------------------------- End of part B
